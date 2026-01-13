@@ -1,0 +1,63 @@
+﻿using System;
+using System.Windows.Forms;
+using BusinessLayer;
+
+namespace DVLD.Users
+{
+    public partial class frmAddUpdateUser : Form
+    {
+        public frmAddUpdateUser () {
+            InitializeComponent();
+            ctrlPersonInfoWithFilter1.OnPersonSelected += ctrlPersonInfoWithFilter_OnPersonSelected;
+        }
+        public frmAddUpdateUser(int userId)
+        {
+            InitializeComponent();
+            _UpdateModeConf(userId);
+        }
+        enum enMode { Add, Update }
+        enMode _mode = enMode.Add;
+        clsUser User = new clsUser();
+        private void _FillFieldsWithUserInfo()
+        {
+            lblUserID.Text = User.UserID.ToString();
+            tbUserName.Text = User.UserName;
+            tbPassword.Text = User.Password;
+            tbConfirmPassword.Text = User.Password;
+            chkIsActive.Checked = User.IsActiveChecker;
+        }
+        private bool _UpdateModeConf(int userId, int personId = -1)
+        {
+            bool success = false;
+            _mode = enMode.Update;
+            if (personId == -1)
+            {
+                User = clsUser.GetUserByID(clsGlobal.CurrentUser, userId);
+                success = ctrlPersonInfoWithFilter1.LoadPersonInfo(User.PersonID);
+            }
+            else
+            {
+                success = ctrlPersonInfoWithFilter1.LoadPersonInfo(personId);
+            }
+            // view
+            lbTitle.Text = "Update User";
+            _FillFieldsWithUserInfo();
+            return success;
+        }
+        private void btnPersonInfoNext_Click(object sender, EventArgs e)
+        {
+            tc1.SelectedIndex = 1;
+        }
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void ctrlPersonInfoWithFilter_OnPersonSelected(int obj)
+        {
+            int personId = obj;
+            int userId = -1;
+            if (clsUser.IsPersonIsAUser(clsGlobal.CurrentUser, personId, ref userId))
+                _UpdateModeConf(userId, personId);
+        }
+    }
+}
