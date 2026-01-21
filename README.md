@@ -5,8 +5,11 @@
 ## 📌 Project Overview
 
 The **DVLD System (Drivers & Vehicles License Department)** is a comprehensive, enterprise-level desktop application designed to simulate and manage the full lifecycle of driver licensing processes. The system handles everything from personal identity management to multi-stage testing, license issuance, renewals, and legal detentions.
->  DB 📊 Tables & 🔗 Relations
+>  DB 📊 Tables & 🔗 Relationships
 ![DB Schema](assets/DB-Diagram.PNG)
+
+> 📊 Screenshots
+![People Form](assets/People.gif) ![People Form](assets/Login.gif) ![People Form](assets/Users.gif) ![People Form](assets/LocalApplications.gif)
 
 ## 🏗 Architecture & Design Patterns
 
